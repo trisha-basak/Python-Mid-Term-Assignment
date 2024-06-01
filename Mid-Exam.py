@@ -40,25 +40,16 @@ class hall(Star_Cinema):
                 print(f'This {i, j} seat is already booked')
 
     def view_show_list(self):
-        # if not self.__show_list:
-        #     print("No shows available.")
-        #     return
         for show_id, movie_name, time in self.__show_list:
             print(f'Show ID is: {show_id}, Movie Name is: {movie_name}, Time: {time}')
 
     def view_available_seats(self, show_id):
         if show_id not in self.__seats:
             return
-        
-        print(f"Available seats for show ID {show_id}:")
-        for i, row in enumerate(self.__seats[show_id]):
-            for j, seat in enumerate(row):
-                # if seat == '0':
-                print(f"Seat ({i},{j})", end='\n')
-            print()
 
-        for row in self.__seats[show_id]:
-            for element in row:
+        print(f"Available seats View:")
+        for i, row in enumerate(self.__seats[show_id]):
+            for j, element in enumerate(row):
                 if self.__seats[show_id][i][j] == '1':
                     element = '1'
                     print(element, end=" ")
@@ -77,8 +68,6 @@ hall1 = hall(5, 6, 'Hall 1')
 hall1.entry_show('S1', 'Rupkotha', '12:00 PM')
 hall1.entry_show('S2', 'Rajkonna', '04:00 PM')
 
-# print(Star_Cinema.hall_list)
-# print(hall1.view_available_seats(11))
 while True:
     print("1. View all shows today")
     print("2. View available seats in show")
@@ -94,21 +83,19 @@ while True:
     elif Option == '2':
         showID = input("Enter show ID: ")
         hall1.view_available_seats(showID)
-        # hall2.view_available_seats(showID)
     
     elif Option == '3':
         showID = input("Enter show ID: ")
 
         seats_to_book = []
-        while True:
+        N = int(input('Enter the number of seat that you want to book'))
+        while N:
             row = int(input("Enter row: "))
-            if row == -1:
-                print('Your Seat booked')
-                break
             col = int(input("Enter col: "))
             seats_to_book.append((row, col))
+            N -= 1
+        print('Your Seat booked')
         hall1.book_seats(showID, seats_to_book)
-        # hall2.book_seats(showID, seats_to_book)
     
     elif Option == '4':
         break
