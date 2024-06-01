@@ -26,16 +26,13 @@ class hall(Star_Cinema):
         self.__seats[show_id] = seatManagement
     
     def book_seats(self, show_id, seat_bookList):
-        if show_id not in self.__seats:
-            print(f'This {show_id} is not found.')
-            return
-        
         for i, j in seat_bookList: #i row || j col
             if i >= self.__rows or j >= self.__cols or i < 0 or j < 0:
                 print(f"Error: Seat at {i}{j} is invalid.")
                 continue
             if self.__seats[show_id][i][j] == '0':#Free
                 self.__seats[show_id][i][j] = '1' #Booked
+                print('Your Seat booked')
             else:
                 print(f'This {i, j} seat is already booked')
 
@@ -56,6 +53,12 @@ class hall(Star_Cinema):
                 else:
                     print(element, end=" ")
             print()
+    
+    def checkID(self, id):
+        if id not in self.__seats:
+            print(f'This {id} is not found.')
+            return False
+        return True
 
     @property
     def hall_no(self):
@@ -86,15 +89,16 @@ while True:
     
     elif Option == '3':
         showID = input("Enter show ID: ")
-
+        val = hall1.checkID(showID)
         seats_to_book = []
-        N = int(input('Enter the number of seat that you want to book'))
+        if val == False:
+            continue
+        N = int(input('Enter the number of seat that you want to book: '))
         while N:
             row = int(input("Enter row: "))
             col = int(input("Enter col: "))
             seats_to_book.append((row, col))
             N -= 1
-        print('Your Seat booked')
         hall1.book_seats(showID, seats_to_book)
     
     elif Option == '4':
